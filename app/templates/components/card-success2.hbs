@@ -1,0 +1,15 @@
+<div class="card card-block card-success2">
+<h4 class="card-title">{{card.title}}</h4>
+  <p class="card-text">{{card.body}}</p>
+  <div class="tag-btn-col">
+    <ul>
+      {{#each card.tags as |tag|}}
+      <li class="{{if (eq selectedTag tag) 'active'}}"><button>{{tag}}</button></li>
+    	{{/each}}
+    </ul>
+  </div>
+  <!-- tag-btn-col -->
+  <div class="card-footer">
+    <span class="views">{{card.views}} VIEWS</span> <a class="pull-right" href="#">VIEW PAGE <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+</div>{{yield}}

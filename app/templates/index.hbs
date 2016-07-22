@@ -1,0 +1,297 @@
+<body id="toolkit-sum">
+  <div class="container-fluid no-pad">
+    <div class="container no-pad">
+      <nav class="navbar navbar-inverse navbar-static-top">
+        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+        &#9776;
+        </button>
+        <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+          <a class="navbar-brand" href="#"><img src="img/logo.jpg" alt="logo"/></a>
+          <ul class="nav nav-pills">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Connect</a>
+              <span class="triangle"></span>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Find Resources</a>
+              <span class="triangle"></span>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Toolkits</a>
+              <span class="triangle"></span>
+            </li>
+            <li class="nav-item pull-right">
+              <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="">
+                  <i class="fa fa-search"></i>
+                </div>
+              </form>
+            </li>
+            <li class="nav-item pull-right">
+              <a class="nav-link login" href="#" data-toggle="modal" data-target="#myModal">Login</a>
+            </li>
+            <li class="nav-item logged pull-right">
+              <a class="nav-link" href="#">My Profile</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade nav-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <form>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-xs-12">
+                  <input type="text" class="form-control" id="inputEmail" placeholder="Email or Username">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-xs-12">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+              </div>
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                  <input type="checkbox"> Remember Me
+                  </label>
+                  <a href="#">Forgot your Password?</a>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <button class="btn-login">Go!</button>
+              </div>
+          	</div><!-- row -->
+          </form>
+        </div>
+        <!-- modal-body -->
+      </div>
+      <!-- modal-content -->
+    </div>
+    <!-- modal-dialog -->
+  </div>
+  <!-- modal -->
+  <!-- Main Content -->
+  <div class="container-fluid search-row">
+    <div class="container">
+      <div class="row advance-search">
+        <div class="col-md-4 col-sm-6 col-xs-12 tags-col">
+          <div class="col-xs-12">
+            <form role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="">
+                <i class="fa fa-search"></i>
+              </div>
+            </form>
+          </div>
+          <div class="col-xs-12">
+            <h1>Tags</h1>
+          </div>
+          <div class="col-xs-12 tag-btn-col">
+            <ul>
+            	{{#each tagButtons as |tag|}}
+              <li class="{{if (eq selectedTag tag) 'active'}}"><button {{action 'sortTag' tag}}>{{tag}}</button></li>
+              {{/each}}
+              <li><button class="reset-btn">reset</button></li>
+            </ul>
+          </div>
+          <!-- tag-btn-col -->
+          <div class="col-xs-12">
+            <h1>Sort By</h1>
+          </div>
+          <div class="col-xs-12 radio-col">
+            <input type="radio" id="rb1" name="rb" value="">
+            <label for="rb1">Alphabetical</label><br>
+            <input type="radio" id="rb2" name="rb"value="">
+            <label for="rb2">Most Viewed</label><br>
+            <input type="radio" id="rb3" name="rb" value="">
+            <label for="rb3">Most Recent</label> <br><br>
+          </div>
+          <!-- radio-col -->
+          <div class="col-xs-12">
+            <h1>Categories</h1>
+          </div>
+          <div class="col-xs-12 check-col">
+            <input class="check-1" type="checkbox" id="cb1" name="cb" value="">
+            <label class="check-1" for="cb1">Toolkits</label><br>
+            <input class="check-2" type="checkbox" id="cb2" name="cb"value="">
+            <label class="check-2" for="cb2">Documents</label><br>
+            <input class="check-3" type="checkbox" id="cb3" name="cb" value="">
+            <label class="check-3" for="cb3">Websites</label><br>
+            <input class="check-4" type="checkbox" id="cb4" name="cb" value="">
+            <label class="check-4" for="cb4">Photo/Video</label> 
+          </div>
+          <!-- check-col -->
+        </div>
+        <!-- tags-col -->
+        <div class="col-md-8 col-sm-12 col-xs-12 card-col">
+        	<div class="row">
+            {{#if filteredResults}}
+              {{#each filteredResults as |card|}}
+                <div class="col-md-6">
+                  {{#if (eq card.type "Websites")}}
+                    {{card-success2 selectedTag=selectedTag card=card}}
+                  {{else if (eq card.type "Documents")}}
+                    {{card-success selectedTag=selectedTag card=card}}
+                  {{else if (eq card.type "Toolkits")}}
+                    {{card-danger selectedTag=selectedTag card=card}}
+                  {{else}}
+                    {{card-primary selectedTag=selectedTag card=card}}
+                  {{/if}}
+                </div>
+              {{/each}}
+            {{else}}
+              {{#each model as |card|}}
+                <div class="col-md-6">
+                  {{#if (eq card.type "Websites")}}
+                    {{card-success2 selectedTag=selectedTag card=card}}
+                  {{else if (eq card.type "Documents")}}
+                    {{card-success selectedTag=selectedTag card=card}}
+                  {{else if (eq card.type "Toolkits")}}
+                    {{card-danger selectedTag=selectedTag card=card}}
+                  {{else}}
+                    {{card-primary selectedTag=selectedTag card=card}}
+                  {{/if}}
+                </div>
+              {{/each}}
+            {{/if}}
+        	</div>
+          <!-- card-block -->
+          {{!-- <div class="card card-block card-success">
+            <h4 class="card-title">E-Cigarette Fact Sheet: American Lung Association</h4>
+            <p class="card-text">A fact sheet on e-cigarettes from the American Lung Association. June 2013</p>
+            <div class="tag-btn-col">
+              <ul>
+                <li><button>E-CIGARETTES</button></li>
+                <li><button>FACTSHEET</button></li>
+                <li><button>otp</button></li>
+              </ul>
+            </div>
+            <!-- tag-btn-col -->
+            <div class="card-footer">
+              <span class="views">1,209 VIEWS</span> <a class="pull-right" href="#">VIEW PAGE <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div> --}}
+          <!-- card-block -->
+          {{!-- <div class="card card-block card-success2">
+            <h4 class="card-title">Janine’s Story</h4>
+            <p class="card-text">Why Janine works in tobacco prevention and control.</p>
+            <div class="tag-btn-col">
+              <ul>
+                <li><button>ADVOCACY</button></li>
+                <li><button>TESTIMONY</button></li>
+              </ul>
+            </div>
+            <!-- tag-btn-col -->
+            <div class="card-footer">
+              <span class="views">1,209 VIEWS</span> <a class="pull-right" href="#">VIEW PAGE <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div> --}}
+          <!-- card-block -->
+          {{!-- <div class="card card-block card-danger">
+            <h4 class="card-title">Orientation Toolkit</h4>
+            <p class="card-text">New to tobacco prevention and control in Wisconsin? This orientation will provide you with an overview of priority information and resources needed to begin working in the field.</p>
+            <div class="tag-btn-col">
+              <ul>
+                <li><button>ORIENTATION</button></li>
+              </ul>
+            </div>
+            <!-- tag-btn-col -->
+            <div class="card-footer">
+              <span class="views">1,209 VIEWS</span> <a class="pull-right" href="#">VIEW PAGE <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div> --}}
+          <!-- card-block -->
+        {{!-- </div> --}}
+        <!-- card-col -->
+        {{!-- <div class="col-md-4 col-sm-6 col-sm-offset-6 col-xs-offset-0 col-md-offset-0 col-xs-12 card-col"> --}}
+          {{!-- <div class="card card-block card-danger">
+            <h4 class="card-title">Media Advocacy Toolkit</h4>
+            <p class="card-text">Use this toolkit when you're trying to obtain earned media and leverage paid media. Topics include talking points, press releases, letters to the editor, opinion editorials, and editorial board visits.</p>
+            <div class="tag-btn-col">
+              <ul>
+                <li><button>EDITORIAL BOARD</button></li>
+                <li><button>MEDIA ADVOCACY</button></li>
+                <li><button>lte</button></li>
+                <li><button>OP ED</button></li>
+                <li><button>PRESS RELEASE</button></li>
+              </ul>
+            </div>
+            <!-- tag-btn-col -->
+            <div class="card-footer">
+              <span class="views">982 VIEWS</span> <a class="pull-right" href="#">VIEW PAGE <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div> --}}
+          <!-- card-block -->
+          {{!-- <div class="card card-block card-primary">
+            <h4 class="card-title">FACT</h4>
+            <p class="card-text">FACT is Wisconsin’s youth tobacco program for 7th-12th graders. FACT members take action by spreading the truth about tobacco.</p>
+            <div class="tag-btn-col">
+              <ul>
+                <li><button>advocacy</button></li>
+                <li><button>FACT</button></li>
+                <li><button>youth</button></li>
+              </ul>
+            </div>
+            <!-- tag-btn-col -->
+            <div class="card-footer">
+              <span class="views">987 VIEWS</span> <a class="pull-right" href="#">VIEW PAGE <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div> --}}
+          <!-- card-block -->
+          {{!-- <div class="card card-block card-primary">
+            <h4 class="card-title">Center for Urban Initiatives and Research - University of Wisconsin - Milwaukee</h4>
+            <p class="card-text">Center for Urban Initiatives and Research (CUIR) provides research services and technical assistance to public and non-profit organizations, including the Wisconsin Tobacco Prevention and Control Program.</p>
+            <div class="tag-btn-col">
+              <ul>
+                <li><button>DATA-WI</button></li>
+              </ul>
+            </div>
+            <!-- tag-btn-col -->
+            <div class="card-footer">
+              <span class="views">987 VIEWS</span> <a class="pull-right" href="#">VISIT WEBSITE <i class="fa fa-link"></i></a>
+            </div>
+          </div> --}}
+          <!-- card-block -->
+          {{!-- <div class="card card-block card-danger">
+            <h4 class="card-title">Strategic Recruitment Planning Toolkit</h4>
+            <p class="card-text">This toolkit includes an overview of the SRP process and all the tools you need to make it successful.</p>
+            <div class="tag-btn-col">
+              <ul>
+                <li><button>COALITION BUILDING</button></li>
+                <li><button>STRATEGIC RECRUITMENT</button></li>
+              </ul>
+            </div>
+            <!-- tag-btn-col -->
+            <div class="card-footer">
+              <span class="views">1,209 VIEWS</span> <a class="pull-right" href="#">VIEW PAGE <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div> --}}
+          <!-- card-block -->
+        </div>
+        <!-- card-col -->
+      </div>
+      <!-- advance-search -->
+    </div>
+    <!-- container -->
+  </div>
+  <!-- container-fluid -->
+  <!-- Footer -->
+  <div class="container-fluid footer">
+    <div class="container">
+      <div class="col-xs-12">
+        <h2><span class="span-1">WELCOME TO TOBWIS.ORG</span> <span class="span-2">your home for tobacco prevention resources.</span> <span class="span-1">learn more <span class="span-3"><a href="#">about us</a></span>.</span></h2>
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+{{outlet}}
